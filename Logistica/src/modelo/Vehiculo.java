@@ -3,112 +3,100 @@ package modelo;
 import java.util.Random;
 
 public class Vehiculo {
-	
+
 	private String patente;
 	private String marca;
 	private String modelo;
-	private int anio;
-	private boolean electrico;
-	
-	public Vehiculo(String patente, String modelo, int anio, boolean electrico) {
+	private int lanzamientoModelo;
+	private int versionModelo;
+	private float kilometraje;
+	private float cotizacion;	
+
+	public Vehiculo(String marca, String modelo, int lanzamientoModelo, int versionModelo, float kilometraje) {
 		super();
-		this.patente = patente;
-		this.modelo = modelo;
-		this.anio = anio;
-		this.electrico = electrico;
-	}
-
-	public String getPatente() {
-		return patente;
-	}
-
-	public void setPatente(String patente) {
-		this.patente = patente;
-	}
-
-	public String getModelo() {
-		return modelo;
-	}
-
-	public void setModelo(String modelo) {
-		this.modelo = modelo;
-	}
-
-	public int getAnio() {
-		return anio;
-	}
-
-	public void setAnio(int anio) {
-		this.anio = anio;
-	}
-
-	public boolean isElectrico() {
-		return electrico;
-	}
-
-	public void setElectrico(boolean electrico) {
-		this.electrico = electrico;
-	}
-
-	public String getMarca() {
-		return marca;
-	}
-
-	public void setMarca(String marca) {
 		this.marca = marca;
+		this.modelo = modelo;
+		this.lanzamientoModelo = lanzamientoModelo;
+		this.versionModelo = versionModelo;
+		this.kilometraje = kilometraje;
+		this.patente = this.generatePatente(3, 3);
+		this.cotizacion = this.cotizar(lanzamientoModelo, versionModelo, kilometraje);
+	}	
+
+	@Override
+	public String toString() {
+		return "Vehiculo [patente=" + patente + ", marca=" + marca + ", modelo=" + modelo + ", lanzamientoModelo="
+				+ lanzamientoModelo + ", versionModelo=" + versionModelo + ", kilometraje=" + kilometraje
+				+ ", cotizacion=" + cotizacion + "]";
 	}
-	
-	public boolean esElectrico (int anio) {
-		
+
+	public boolean esElectrico(int version) {
+
 		boolean esElectrico = false;
-		
-		if(anio > 2020) {
+
+		if (version > 2020) {
 			esElectrico = true;
 		}
-		
+
 		return esElectrico;
 	}
-	
-	public float cotizar (int anio) {
-		float precio;
-		
-		if(anio > 2020) {
-			precio = anio * 170;
-		}else if (anio < 2020 && anio > 2005) {
-			precio = anio * 120;
-		}else {
-			precio = anio * 90;
+
+	public boolean esGasolero(int version) {
+
+		boolean esGasolero = false;
+		boolean esElectrico = this.esElectrico(version);
+
+		if (!esElectrico && version < 2008) {
+			esGasolero = true;
 		}
+
+		return esGasolero;
+	}
+
+	public float cotizar(int lanzamientoModelo, int versionModelo, float kilometraje) {
+
+		float precio;
+		float apreciacion = (versionModelo - lanzamientoModelo) + 325;
+		float despreciacion = kilometraje / 100000;
 		
+		if (versionModelo > 2020) {
+			precio = versionModelo * (apreciacion - despreciacion);
+		}
+
+		else {			
+			
+			if (versionModelo < 2020 && versionModelo > 2005) {
+				precio = versionModelo * (apreciacion - despreciacion);
+			} 
+			
+			else {
+				precio = versionModelo * (apreciacion - despreciacion);
+			}
+		}
+
 		return precio;
 	}
-	
-	
-	public String generatePatente() {
-		
+
+	public String generatePatente(int cantidadLetras, int cantidadNumeros) {
+
 		String LETTERS = "ABCDEFGHIJKLMNOPQRSTUVWXYZ";
-	    Random RANDOM = new Random();
-	    
-        StringBuilder patente = new StringBuilder();
+		Random RANDOM = new Random();
 
-        // Generar 3 letras aleatorias
-        for (int i = 0; i < 3; i++) {
-            int letterIndex = RANDOM.nextInt(LETTERS.length());
-            patente.append(LETTERS.charAt(letterIndex));
-        }
+		StringBuilder patente = new StringBuilder();
 
-        // Agregar un guion
-        patente.append('-');
+		for (int i = 0; i < cantidadLetras; i++) {
+			int letterIndex = RANDOM.nextInt(LETTERS.length());
+			patente.append(LETTERS.charAt(letterIndex));
+		}
 
-        // Generar 3 números aleatorios
-        for (int i = 0; i < 3; i++) {
-            int number = RANDOM.nextInt(10);
-            patente.append(number);
-        }
+		patente.append('-');
 
-        return patente.toString();
-    }
-	
-	
-	
+		for (int i = 0; i < cantidadNumeros; i++) {
+			int number = RANDOM.nextInt(10);
+			patente.append(number);
+		}
+
+		return patente.toString();
+	}
+
 }
