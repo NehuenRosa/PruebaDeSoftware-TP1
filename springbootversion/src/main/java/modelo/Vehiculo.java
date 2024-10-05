@@ -54,8 +54,6 @@ public class Vehiculo {
 
 	public float cotizar(int lanzamientoModelo, int versionModelo, float kilometraje) {
 
-	    System.out.println("Lanzamiento: " + lanzamientoModelo + ", Versión: " + versionModelo + ", Kilometraje: " + kilometraje);
-
 		float precio;
 		float apreciacion = (versionModelo - lanzamientoModelo) + 325;
 		float despreciacion = kilometraje / 100000;
