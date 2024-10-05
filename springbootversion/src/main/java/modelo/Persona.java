@@ -10,7 +10,8 @@ public class Persona {
 	private String genero;
 	private int edad;
 	private String dni;
-	private String cuit;	
+	private String cuit;
+	private LocalDate fechaNacimiento;
 
 	public Persona(String nombre, String apellido, String genero, String dni, LocalDate fechaNacimiento) throws Exception {
 		super();
@@ -19,6 +20,7 @@ public class Persona {
 		this.genero = genero;
 		this.dni = dni;
 		this.cuit = this.generarCuit(dni, genero);
+		this.fechaNacimiento = fechaNacimiento;
 		this.edad = this.calcularEdad(fechaNacimiento);
 	}	
 
@@ -26,6 +28,10 @@ public class Persona {
 	public String toString() {
 		return "Persona [nombre=" + nombre + ", apellido=" + apellido + ", genero=" + genero + ", edad=" + edad
 				+ ", dni=" + dni + ", cuit=" + cuit + "]";
+	}
+
+	public LocalDate getFechaNacimiento(){
+		return fechaNacimiento;
 	}
 
 	public String generarCuit(String dni, String genero) throws Exception {
