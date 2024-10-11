@@ -11,7 +11,7 @@ import org.mockito.MockitoAnnotations;
 
 class EnvioTest {
 
-    // Mocks las clases que voy a usar
+   
     @Mock
     private Paquete paqueteMock;
     
@@ -25,9 +25,9 @@ class EnvioTest {
     private Persona transportistaMock;
     
     //@Mock
-    //private Vehiculo transporteMock; NO LO INSTANCIO APENAS CREO EL ENVIO.
+    private Vehiculo transporteMock;
 
-    //Inyecto a Envio las clases Mockeadas.
+    
     @InjectMocks
     private Envio envio;
     
@@ -44,7 +44,7 @@ class EnvioTest {
         when(destinoMock.getProvincia()).thenReturn("Córdoba");
         
         // Crear una instancia de Envio con los mocks
-        envio = new Envio(paqueteMock, origenMock, destinoMock, transportistaMock);
+        envio = new Envio(paqueteMock, origenMock, destinoMock, transportistaMock,transporteMock);
     }
 
     @Test
@@ -81,7 +81,7 @@ class EnvioTest {
     @Test
     void testAgregarVehiculoAlEnvio_VehiculoExistente(){
     	
-    	//Ingreso el primer vehiculo al envio
+    	
     	Vehiculo primerVehiculoMock = mock(Vehiculo.class);
     	try {
 			envio.agregarVehiculoAlEnvio(primerVehiculoMock);
@@ -90,21 +90,21 @@ class EnvioTest {
 			e.printStackTrace();
 		}
     	
-        Vehiculo nuevoVehiculoMock = mock(Vehiculo.class); // Crear un nuevo vehículo para intentar agregarlo
+        Vehiculo nuevoVehiculoMock = mock(Vehiculo.class); 
 
-        // Verifica que al intentar agregar otro vehículo, se arroje una excepción
+       
         Exception exception = assertThrows(IllegalArgumentException.class, () -> {
             envio.agregarVehiculoAlEnvio(nuevoVehiculoMock);
         });
         
-        // Verifica el mensaje de la excepción
+        
         assertEquals("Ya existe un vehículo asignado para este envío.", exception.getMessage());
     }
 
 
     @Test
     void testAgregarVehiculoAlEnvio_VehiculoNulo() {
-        // Verifica que al pasar un vehículo nulo, se arroje una excepción
+        
         Exception exception = assertThrows(IllegalArgumentException.class, () -> {
             envio.agregarVehiculoAlEnvio(null);
         });

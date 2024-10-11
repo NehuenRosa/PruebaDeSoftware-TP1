@@ -12,7 +12,7 @@ public class Localidad {
 		this.nombre = nombre;
 		this.provincia = provincia;
 		this.alias = this.obtenerAlias(nombre, provincia);
-		this.esCentralOperativa = this.esCetral(nombre);
+		this.esCentralOperativa = this.esCentral(nombre);
 	}	
 
 	@Override
@@ -21,7 +21,7 @@ public class Localidad {
 				+ esCentralOperativa + "]";
 	}
 
-	public boolean esCetral(String nombre) {
+	public boolean esCentral(String nombre) {
 
 		boolean esCentral = false;
 
@@ -50,7 +50,7 @@ public class Localidad {
 
 		String alias = nombre.substring(0, 2).toUpperCase() + provincia.substring(0, 2).toUpperCase();
 			
-		if(this.esCetral(nombre)) {
+		if(this.esCentral(nombre)) {
 			
 			alias += "CO"; // CO = CENTRAL OPERATIVA
 		}

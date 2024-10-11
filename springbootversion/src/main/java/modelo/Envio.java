@@ -8,12 +8,13 @@ public class Envio {
 	private Persona transportista;
 	private Vehiculo transporte;
 	
-	public Envio(Paquete paquete, Localidad origen, Localidad destino, Persona transportista) {
+	public Envio(Paquete paquete, Localidad origen, Localidad destino, Persona transportista,Vehiculo transporte) {
 		super();
 		this.paquete = paquete;
 		this.origen = origen;
 		this.destino = destino;
 		this.transportista = transportista;
+		this.transporte=transporte;
 	}
 
 	@Override
